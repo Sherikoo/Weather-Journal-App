@@ -1,6 +1,6 @@
 /* Global Variables */
 let baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-let apiKey = '&appid=46b42afecd356f6528d16d0951ee67ad';
+let apiKey = '&appid=46b42afecd356f6528d16d0951ee67ad&units=metric';
 
 // Event Listener for the "Generate" button
 document.getElementById("generate").addEventListener("click", function() {
@@ -62,7 +62,7 @@ const updateUI = async() => {
 	try{
 		const allData = await request.json();
 		document.getElementById("date").innerHTML = `<span>Date:</span> ${allData.date}`;
-		document.getElementById("temp").innerHTML = `<span>Temperature:</span> ${Math.round(allData.temperature-273)} <span>&#8451</span>`;
+		document.getElementById("temp").innerHTML = `<span>Temperature:</span> ${allData.temperature} <span>&#8451</span>`;
 		document.getElementById("content").innerHTML = `<span>User Feelings:</span> ${allData.userResponse}`;
 		document.querySelector("#entryHolder").classList.add("resultStyle");
 	}catch(error){
