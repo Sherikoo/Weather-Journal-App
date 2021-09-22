@@ -8,7 +8,7 @@ If an invalid city name is entered, the app alerts the user.
 
 # The idea behind the project
 
-The webapp is developed by creating the server side and the client side using Node JS and Express, getting data from the API, handling data between both sides, and presenting data to the user.
+The webapp is developed by creating the server side and the client side using Node JS and Express, getting data from the API, handling data between both sides using asynchronous functions (async, fetch, await, try, catch), and presenting data to the user.
 
 
 # Instructions to run the app
