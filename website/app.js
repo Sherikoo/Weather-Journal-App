@@ -1,71 +1,71 @@
 /* Global Variables */
-let baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
+// API URL
+let baseURL = 'http://api.openweathermap.org/data/2.5/weather?q=';
 let apiKey = '&appid=46b42afecd356f6528d16d0951ee67ad&units=metric';
 
+
 // Event Listener for the "Generate" button
-document.getElementById("generate").addEventListener("click", function() {
-	const newDate = generateDate();
-	const zipCode = document.getElementById("zip").value;
-	const feelings = document.getElementById("feelings").value;
-	getData(baseURL, zipCode, apiKey)
-	.then(function(data) {
-		postData('/postData', {temperature: data.main.temp, date: newDate, userResponse: feelings})
-	})
-	.then(updateUI);
+document.getElementById('generate').addEventListener('click', function(){
+  const cityName = document.getElementById('city').value;
+  const d = new Date();
+  const date = d.getDate() + '.' + Number(d.getMonth()+1).toString() + '.' + d.getFullYear();
+  const userResponse = document.getElementById('feelings').value;
+  getApiData(baseURL, cityName, apiKey)
+  .then(function(newData) {
+    postData('/postData', {date: date,
+                           temperature: newData.main.temp,
+                           weather: newData.weather[0].main,
+                           userResponse: userResponse})
+  .then(updateUI());
+  });
 });
 
-// Create a new date instance dynamically with JS
-function generateDate() {
-	let d = new Date();
-    return d.getDate() +'.'+ (Number(d.getMonth()) + 1).toString() +'.'+ d.getFullYear();
-}
 
 // Get data from Weather API
-const getData = async(baseURL, zipCode, apiKey) => {
-	const res = await fetch(baseURL+zipCode+apiKey);
-	try{
-		const data = await res.json();
-		// Alert the user if he/she entered an invalid zip code
-		if(data.cod === "404" || data.cod === "400") {
-			alert("Please enter a valid zip code");
+const getApiData = async(baseURL, cityName, apiKey) => {
+  const res = await fetch(baseURL + cityName + apiKey);
+  try {
+    const apiData = await res.json();
+    if(apiData.cod === "404" || apiData.cod === "400") {
+			alert("Please enter a valid city name");
 			return;
 		}
-		console.log(data);
-		return data;
-	}catch(error) {
-		console.log("error", error);
-	}
+    console.log(apiData);
+    return apiData;
+  }catch(error) {
+    console.log('Error', error);
+  }
 }
 
 // Post all collected data to the server end point object
-const postData = async(url = '', data ={}) => {
-	const res = await fetch(url, {
-		method: 'POST',
-		credentials: 'same-origin',
-		headers: {
-			'Content-Type' : 'application/json',
-		},
-		body: JSON.stringify(data),
-	});
-	try{
-		const newData = await res.json();
-		console.log(newData);
-		return newData;
-	}catch(error){
-		console.log("error", error);
-	}
+const postData = async(url = '', data = {}) => {
+  const res = await fetch(url, {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  try {
+    const newData = await res.json();
+    console.log(newData);
+    return newData;
+  }catch(error) {
+    console.log('Error', error);
+  }
 }
 
 // Update the UI with all data
 const updateUI = async() => {
-	const request = await fetch('/getData');
-	try{
-		const allData = await request.json();
-		document.getElementById("date").innerHTML = `<span>Date:</span> ${allData.date}`;
-		document.getElementById("temp").innerHTML = `<span>Temperature:</span> ${allData.temperature} <span>&#8451</span>`;
-		document.getElementById("content").innerHTML = `<span>User Feelings:</span> ${allData.userResponse}`;
-		document.querySelector("#entryHolder").classList.add("resultStyle");
-	}catch(error){
-		console.log("error", error);
-	}
+  const res = await fetch('/getData');
+  try {
+    const dataForUI = await res.json();
+    document.getElementById('date').innerHTML = `<span>Date:</span> ${dataForUI.date}`;
+    document.getElementById('temp').innerHTML = `<span>Temperature:</span> ${dataForUI.temperature} <span>&#8451;</span>`;
+    document.getElementById('weather').innerHTML = `<span>Weather:</span> ${dataForUI.weather}`;
+    document.getElementById('content').innerHTML = `<span>User Response:</span> ${dataForUI.userResponse}`;
+  }catch(error) {
+    console.log('Error', error);
+  }
 }
