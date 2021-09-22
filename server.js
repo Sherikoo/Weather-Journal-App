@@ -22,26 +22,28 @@ app.use(cors());
 app.use(express.static('website'));
 
 // Setup Server
-const port = 8000;
-const server = app.listen(port, () => {
-	console.log(`Server running on port: ${port}`);
-});
+const port = 3000;
 
-// POST route that adds incoming data to projectData
-app.post('/postData', (req, res) => {
-	newEntry = {
-		temperature: req.body.temperature,
-		date: req.body.date,
-		userResponse: req.body.userResponse
-	}
-	projectData = newEntry;
-	data.push(newEntry);
-	res.send(projectData);
+const server = app.listen(port, ()=>{
+  console.log(`The server is running on port: ${port}`);
 })
 
 // GET route that returns the projectData object
 app.get('/getData', (req, res) => {
-	res.send(projectData);
-	console.log(data);
+  console.log(projectData);
+  res.send(projectData);
 });
 
+// POST route that adds incoming data to projectData
+app.post('/postData', (req, res) => {
+  newEntry = {
+    date:req.body.date,
+    temperature: req.body.temperature,
+    weather:req.body.weather,
+    userResponse:req.body.userResponse
+  }
+  console.log(newEntry);
+  projectData = newEntry;
+  data.push(newEntry);
+  console.log(data);
+});
