@@ -21,5 +21,6 @@ Open the Command Prompt and type the following:
 - npm install body-parser
 - npm install cors
 - node server.js (to run the server)
-- type this url "localhost:3000" in the browser to open the webapp
-- Type any valid city name and your feelings, then click the 'Generate' button.
+
+Type this url "localhost:3000" in the browser to open the webapp
+Type any valid city name and your feelings, then click the 'Generate' button.
