@@ -17,7 +17,7 @@ At first, the Node JS must be installed on the computer.
 
 Open the Command Prompt and type the following:
 
-- npm install express
+- Item npm install express
 - npm install body-parser
 - npm install cors
 - node server.js (to run the server)
