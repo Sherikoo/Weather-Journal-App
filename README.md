@@ -6,6 +6,10 @@ This weather app gets a city's name code and his/her feelings, fetch the OpenWea
 If an invalid city name is entered, the app alerts the user.
 
 
+# The idea behind the project
+
+The webapp is developed by creating the server side and the client side, getting data from the API, handling data between both sides, and presenting data to the user.
+
 
 # Instructions to run the app
 
