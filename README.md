@@ -17,9 +17,9 @@ At first, the Node JS must be installed on the computer.
 
 Open the Command Prompt and type the following:
 
-1- npm install express
-2- npm install body-parser
-3- npm install cors
-4- node server.js (to run the server)
-5- type this url "localhost:3000" in the browser to open the webapp
-6- Type any valid city name and your feelings, then click the 'Generate' button.
+- npm install express
+- npm install body-parser
+- npm install cors
+- node server.js (to run the server)
+- type this url "localhost:3000" in the browser to open the webapp
+- Type any valid city name and your feelings, then click the 'Generate' button.
